@@ -1,0 +1,66 @@
+.chord {
+  fill: #506c77;
+  opacity: 1;
+}
+
+.chord.focus {
+  opacity: 1;
+}
+
+.chord.blur {
+  opacity: 0.5;
+}
+
+.chord.mouseover {
+  opacity: 1;
+}
+
+.chord.mouseout {
+  opacity: 0.5;
+}
+
+.circle {
+  fill: steelblue;
+  opacity: 1;
+}
+
+.circle.blur {
+  opacity: 0.5;
+}
+
+.circle.focus {
+  opacity: 1;
+}
+
+.circle.mouseover {
+  opacity: 1;
+}
+
+.circle.mouseout {
+  opacity: 0.5;
+}
+
+.link {
+  fill: #e0e1e5;
+  opacity: 0.3;
+}
+
+.link.blur {
+  opacity: 0.3;
+}
+
+.link.focus {
+  opacity: 1;
+}
+
+.link.mouseover {
+  opacity: 1;
+}
+
+.link.mouseout {
+  opacity: 0.3;
+}
+
+.text {
+  fill: black;
+}
