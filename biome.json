@@ -24,7 +24,16 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "style": {
+        "useImportType": "warn"
+      },
+      "complexity": {
+        "useArrowFunction": "off"
+      },
+      "recommended": true,
+      "suspicious": {
+        "noExplicitAny": "warn"
+      }
     }
   }
 }

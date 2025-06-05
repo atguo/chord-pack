@@ -1,6 +1,6 @@
-import ChordPackChart from '../../components/ChordPack';
+import { ChordPackChart } from '../../components/ChordPack';
 import { chords, circles, dataMatrix } from './data';
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof ChordPackChart> = {
   title: 'Example/ChordPack',
@@ -22,6 +22,13 @@ export const IPConversation: Story = {
     style: {
       width: '900px',
       height: '900px'
+    },
+    onItemSelect: (info) => {
+      console.log(info);
+    },
+    onItemUnSelect: (info) => {
+      console.log(info);
     }
   }
 }
+

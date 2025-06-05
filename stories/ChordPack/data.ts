@@ -3120,7 +3120,7 @@ const INTRANET_ADDR_PREFIX: string[] = ["10.", "192.168"];
 const METRIC = "totalBytes";
 
 
-data.forEach((item) => {
+for (const item of data) {
   const ipAIsIntrannet = !!INTRANET_ADDR_PREFIX.find((prefix) =>
     item.ipAAddress.startsWith(prefix)
   );
@@ -3141,14 +3141,14 @@ data.forEach((item) => {
       chordNames.push(internet);
     }
   }
-});
+}
 
 
 const dataMatrix: number[][] = new Array(chordNames.length)
   .fill(null)
   .map(() => new Array(circleNames.length).fill(0));
 
-data.forEach((item) => {
+for (const item of data) {
   const ipAIsIntrannet = !!INTRANET_ADDR_PREFIX.find((prefix) =>
     item.ipAAddress.startsWith(prefix)
   );
@@ -3170,7 +3170,7 @@ data.forEach((item) => {
       dataMatrix[rowIndex][colIndex] += item[METRIC];
     }
   }
-});
+}
 
 export { chordNames as chords, circleNames as circles, dataMatrix };
 

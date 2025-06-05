@@ -64,3 +64,14 @@
 .text {
   fill: black;
 }
+
+.text-tooltip {
+  position: fixed;
+  background-color: #fff;
+  color: #000;
+  padding: 5px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  pointer-events: none;
+  z-index: 1000;
+}
