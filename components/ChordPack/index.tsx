@@ -185,7 +185,10 @@ export const ChordPackChart = (props: ChordPackChartProps) => {
       prevClicked.current[type === 'chord' ? 'chords' : 'circles'] = [index];
 
       // 触发选中事件
-      onItemSelect?.({ type, data: type === 'chord' ? chords[index] : circles[index] });
+      onItemSelect?.({
+        type,
+        data: type === 'chord' ? chords[index] : circles[index],
+      });
 
       // 设置所有节点为模糊状态
       d3.selectAll('.circle').classed('blur', true);
@@ -195,7 +198,7 @@ export const ChordPackChart = (props: ChordPackChartProps) => {
       emphasizeText(type, index);
       selection.classed('blur', false).classed('focus', true);
       // 如果当前节点是圆，则高亮对应的弧
-      d3.selectAll(`.link-${type === 'chord' ? 'circle' : 'chord'}-${index}`)
+      d3.selectAll(`.link-${type}-${index}`)
         .classed('blur', false)
         .classed('focus', true);
 
