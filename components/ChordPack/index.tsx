@@ -1,11 +1,11 @@
 import * as d3 from 'd3';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import './style.css';
-import { sum } from './utils';
+import { angleBetween, sum } from './utils';
 import type { BaseType } from 'd3';
 
 const defaultConfig = {
-  padding: 60,
+  padding: 50,
   arcThickness: 30,
   packPadding: 10,
 };
@@ -97,7 +97,7 @@ export const ChordPackChart = (props: ChordPackChartProps) => {
   // 创建比例尺
   const createScales = useCallback(
     (width: number, height: number) => {
-      const outerRadius = Math.min(width, height) * 0.4 - defaultConfig.padding;
+      const outerRadius = Math.min(width, height) * 0.5 - defaultConfig.padding;
       const innerRadius = outerRadius - defaultConfig.arcThickness;
 
       const chordLogScale = d3
@@ -185,10 +185,7 @@ export const ChordPackChart = (props: ChordPackChartProps) => {
       prevClicked.current[type === 'chord' ? 'chords' : 'circles'] = [index];
 
       // 触发选中事件
-      onItemSelect?.({
-        type,
-        data: type === 'chord' ? chords[index] : circles[index],
-      });
+      onItemSelect?.({ type, data: type === 'chord' ? chords[index] : circles[index] });
 
       // 设置所有节点为模糊状态
       d3.selectAll('.circle').classed('blur', true);
@@ -564,40 +561,40 @@ export const ChordPackChart = (props: ChordPackChartProps) => {
         .sort((a, b) => b.value - a.value);
 
       for (const { value, circleIndex, name } of chordMapCircleData) {
-        const nameArcStartAngle = arcOffset;
-        const nameArcEndAngle =
-          nameArcStartAngle + (value / totalValue) * (endAngle - startAngle);
-        arcOffset = nameArcEndAngle;
+        const arcStartAngle = arcOffset;
+        const arcEndAngle =
+          arcStartAngle + (value / totalValue) * (endAngle - startAngle);
+        arcOffset = arcEndAngle;
 
         const packCircle = finnalPackData.find(
           (circle) => circle.data.name === name,
         );
         if (!packCircle) continue;
 
-        const nameArc = d3
+        const chordPath = d3
           .arc()
           .innerRadius(innerRadius)
-          .startAngle(nameArcStartAngle)
-          .endAngle(nameArcEndAngle)({
-          startAngle: nameArcStartAngle,
-          endAngle: nameArcEndAngle,
-          innerRadius: innerRadius - 1,
-          outerRadius: innerRadius,
-        });
+          .startAngle(arcStartAngle)
+          .endAngle(arcEndAngle)({
+            startAngle: arcStartAngle,
+            endAngle: arcEndAngle,
+            innerRadius: innerRadius - 1,
+            outerRadius: innerRadius,
+          });
 
-        if (!nameArc) continue;
+        if (!chordPath) continue;
 
-        const finnalNameArc = nameArc.split('A').slice(0, 2).join('A');
-        if (finnalNameArc.includes('NaN')) continue;
+        const outerArcPath = chordPath.split('A').slice(0, 2).join('A');
+        if (outerArcPath.includes('NaN')) continue;
 
         const startPoint = {
-          x: innerRadius * Math.cos(nameArcStartAngle - Math.PI / 2),
-          y: innerRadius * Math.sin(nameArcStartAngle - Math.PI / 2),
+          x: innerRadius * Math.cos(arcStartAngle - Math.PI / 2),
+          y: innerRadius * Math.sin(arcStartAngle - Math.PI / 2),
         };
 
         const endPoint = {
-          x: innerRadius * Math.cos(nameArcEndAngle - Math.PI / 2),
-          y: innerRadius * Math.sin(nameArcEndAngle - Math.PI / 2),
+          x: innerRadius * Math.cos(arcEndAngle - Math.PI / 2),
+          y: innerRadius * Math.sin(arcEndAngle - Math.PI / 2),
         };
 
         const centerPos = {
@@ -605,20 +602,24 @@ export const ChordPackChart = (props: ChordPackChartProps) => {
           y: packCircle.y - height / 4,
         };
 
+        const angle1 = angleBetween(startPoint, { x: 0, y: 0 }, centerPos);
+        const angle2 = angleBetween(endPoint, { x: 0, y: 0 }, centerPos);
+
+
         const controlPoint1 = {
           x: endPoint.x / 3,
           y: endPoint.y / 3,
         };
 
         const controlPoint2 = {
-          x: startPoint.x / 3,
-          y: startPoint.y / 3,
+          x: startPoint.x / 4,
+          y: startPoint.y / 4,
         };
 
         paths.push({
-          path: `${finnalNameArc}
-              Q${controlPoint1.x},${controlPoint1.y},${centerPos.x},${centerPos.y}
-              Q${controlPoint2.x},${controlPoint2.y},${startPoint.x},${startPoint.y}`,
+          path: `${outerArcPath}
+              Q${angle1 > 90 ? 0 : controlPoint1.x},${angle1 > 90 ? 0 : controlPoint1.y},${centerPos.x},${centerPos.y}
+              Q${angle2 > 90 ? 0 : controlPoint2.x},${angle2 > 90 ? 0 : controlPoint2.y},${startPoint.x},${startPoint.y}`,
           chordName: data.name,
           circleName: name,
           chordIndex,
@@ -709,7 +710,7 @@ export const ChordPackChart = (props: ChordPackChartProps) => {
           });
           onItemSelect?.({
             type: 'circle',
-            data: circleData[d.circleIndex],
+            data: circles[d.circleIndex],
           });
           d3.selectAll('.blur').classed('blur', false);
           d3.selectAll('.focus').classed('focus', false);
@@ -735,6 +736,7 @@ export const ChordPackChart = (props: ChordPackChartProps) => {
     dataMatrix,
     circleData,
     chordData,
+    circles,
     createScales,
     handleElementClick,
     handleElementHover,

@@ -8,7 +8,7 @@
 }
 
 .chord.blur {
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 .chord.mouseover {
@@ -16,7 +16,7 @@
 }
 
 .chord.mouseout {
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 .circle {
@@ -25,7 +25,7 @@
 }
 
 .circle.blur {
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 .circle.focus {
@@ -37,16 +37,16 @@
 }
 
 .circle.mouseout {
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 .link {
   fill: #e0e1e5;
-  opacity: 0.3;
+  opacity: 0.2;
 }
 
 .link.blur {
-  opacity: 0.3;
+  opacity: 0.2;
 }
 
 .link.focus {
@@ -58,7 +58,7 @@
 }
 
 .link.mouseout {
-  opacity: 0.3;
+  opacity: 0.2;
 }
 
 .text {

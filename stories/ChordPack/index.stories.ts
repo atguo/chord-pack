@@ -1,6 +1,6 @@
-import { ChordPackChart } from '../../components/ChordPack';
-import { chords, circles, dataMatrix } from './data';
 import type { Meta, StoryObj } from '@storybook/react';
+import { ChordPackChart } from '../../components/ChordPack';
+import { generateData } from '../../components/ChordPack/utils';
 
 const meta: Meta<typeof ChordPackChart> = {
   title: 'Example/ChordPack',
@@ -14,11 +14,13 @@ export default meta;
 
 type Story = StoryObj<typeof ChordPackChart>;
 
+const data = generateData(20, 20);
+
 export const IPConversation: Story = {
   args: {
-    dataMatrix,
-    chordNames: Array.from(chords),
-    circleNames: Array.from(circles),
+    dataMatrix: data.dataMatrix,
+    chordNames: data.domains,
+    circleNames: data.names,
     style: {
       width: '900px',
       height: '900px'

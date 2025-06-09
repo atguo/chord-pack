@@ -43,3 +43,40 @@ export const generateData = (domainNum: number, nameNum: number) => {
     dataMatrix,
   };
 };
+
+interface Point {
+  x: number;
+  y: number;
+}
+
+// 计算p1-p2-p3的夹角
+export function angleBetween(p1: Point, p2: Point, p3: Point) {
+  const ax = p2.x - p1.x;
+  const ay = p2.y - p1.y;
+
+  // 向量 B = p3 - p2
+  const bx = p3.x - p2.x;
+  const by = p3.y - p2.y;
+
+  // 点积 A·B
+  const dot = ax * bx + ay * by;
+
+  // 向量长度
+  const lenA = Math.sqrt(ax * ax + ay * ay);
+  const lenB = Math.sqrt(bx * bx + by * by);
+
+  if (lenA === 0 || lenB === 0) {
+    throw new Error("向量长度为 0，无法计算角度");
+  }
+
+  // 夹角（弧度）
+  const cosTheta = dot / (lenA * lenB);
+  const clampedCos = Math.max(-1, Math.min(1, cosTheta)); // 防止精度问题超出范围
+  const rad = Math.acos(clampedCos);
+
+  // 转为角度
+  const deg = (rad * 180) / Math.PI;
+
+  return deg;
+}
+
