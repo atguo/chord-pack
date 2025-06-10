@@ -84,12 +84,12 @@ export const ChordPackChart = (props: ChordPackChartProps) => {
         value: d.value,
         name: d.name,
         rowIndex: i,
-      })),
+      })).filter((d) => d.value > 0),
       circleData: circles.map((d, i) => ({
         value: d.value,
         name: d.name,
         colIndex: i,
-      })),
+      })).filter((d) => d.value > 0),
     }),
     [chords, circles],
   );
@@ -340,6 +340,7 @@ export const ChordPackChart = (props: ChordPackChartProps) => {
   );
 
   useEffect(() => {
+
     // 设置宽高
     const width = containerRef.current?.clientWidth || 0;
     const height = containerRef.current?.clientHeight || 0;
@@ -399,6 +400,8 @@ export const ChordPackChart = (props: ChordPackChartProps) => {
 
     // 创建弧形数据
     const arcData = pie(chordData);
+
+    console.log(arcData, chordData)
 
     // 渲染弧形
     const chordGroup = svg

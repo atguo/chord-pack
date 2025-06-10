@@ -23,7 +23,7 @@ export const generateData = (domainNum: number, nameNum: number) => {
 
   for (let i = 0; i < domainNum; i++) {
     // 该域名总共分配名称数量
-    const allocateNameCount = Random.integer(0, 10);
+    const allocateNameCount = Random.integer(1, Math.round(nameNum / 3));
     // 已分配name下标，为了不重复分配
     const usedNames: number[] = [];
     for (let j = 0; j < allocateNameCount; j++) {
