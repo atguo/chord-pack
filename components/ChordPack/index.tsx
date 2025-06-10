@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import './style.css';
 import { angleBetween, sum } from './utils';
 import type { BaseType } from 'd3';
+export { generateData } from './utils';
 
 const defaultConfig = {
   padding: 50,
