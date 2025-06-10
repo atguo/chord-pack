@@ -4,12 +4,12 @@ import { defineConfig } from '@rslib/core';
 export default defineConfig({
   source: {
     entry: {
-      index: ['./components/**'],
+      index: ['./components/index.tsx'],
     },
   },
   lib: [
     {
-      bundle: false,
+      bundle: true,
       dts: true,
       format: 'esm',
       syntax: 'es6'

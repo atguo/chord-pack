@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "lib": ["DOM", "ES2021"],
+    "lib": [
+      "DOM",
+      "ES2021"
+    ],
     "module": "ESNext",
     "jsx": "react-jsx",
     "strict": true,
@@ -11,5 +14,7 @@
     "useDefineForClassFields": true,
     "noImplicitAny": true
   },
-  "include": ["components", "stories/ChordPack/data.ts"]
+  "include": [
+    "components"
+  ]
 }
