@@ -1,1 +1,1 @@
-export { ChordPackChart } from './ChordPack';
+export * from './ChordPack';
